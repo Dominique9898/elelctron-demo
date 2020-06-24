@@ -106,7 +106,6 @@ let rendererConfig = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, '../src/index.ejs'),
-      //解决初始化报错
       templateParameters(compilation, assets, options) {
         return {
           compilation: compilation,
@@ -161,7 +160,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = ''
+  rendererConfig.devtool = 'hidden-souce-map'  // sourcemap
 
   rendererConfig.plugins.push(
     new MinifyPlugin(),
