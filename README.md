@@ -104,7 +104,7 @@ project = electron-vur(你的项目名,必须填对)
 #### 6. 上传sourcemap
 打包成功可以在dist/electron文件下看到对于js的map
 ![IMAGE](img/51CAE8361B7AF91A46E27AD6D7A19F41.jpg)
-##### 6.1 手动上传
+##### 6.1 法一:手动上传
 版本号可以在错误日志里看,
 ![IMAGE](img/853A0C63BF6B00005A464719C94E7FF2.jpg) <br>
 `sentry-cli releases files <版本号> upload-sourcemaps --url-prefix <线上资源URI，这里要和你的url所在位置进行对应> <打包出来的js和map文件所在目录>` <br>
@@ -112,7 +112,7 @@ electron-vue项目下.如果没进行修改默认entry和output配置,一般url-
 `sentry-cli releases files electron-vue0.0.1 upload-sourcemaps --url-prefix 'app:///dist/electron/' './dist/electron/'` <br>
 **Hint:如果是vue-cli的web项目.url-prefix默认是`'~/js'`,include地址是'`./dist/js'`**
 ![IMAGE](img/BBF5B285855153144EC5FA13279821FF.jpg)
-#### 6.2 @sentry/webpack-plugin打包自动上传
+#### 6.2 法二:@sentry/webpack-plugin打包自动上传
 需要在`main/index.js`,`renderer/main.js`,`webpack.renderer.config.js`,`webpack.main.config.js`中加入一致的release.且测试环境下不自动上传
 
 ```javascript
@@ -121,7 +121,7 @@ import { init } from '@sentry/electron/dist/main'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && init({
   dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
-  release: 'demo-1', //对于sentryWebpackPlugin必须
+  release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
 })
 ```
 ```javascript
@@ -130,7 +130,7 @@ import { Vue as VueIntegration } from '@sentry/integrations'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && Sentry.init({
   dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
-  release: 'demo-1', //对于sentryWebpackPlugin必须
+  release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
   integrations: [
     new VueIntegration({
       Vue,
@@ -148,11 +148,11 @@ if (process.env.NODE_ENV === 'production') {
   mainConfig.plugins.push(
    ...
     new SentryCliPlugin({
-      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
-      configFile: ".sentryclirc", // 不用改
+      include: "./dist/electron/", // output路径
+      configFile: ".sentryclirc", // 文件名不要写错
       ignore: ['node_modules'],
-      release: 'demo-1', //对于sentryWebpackPlugin必须
-      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
+      release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
+      urlPrefix: "app:///dist/electron/",//这里指的是上线后的文件路径
     })
   )
 }
