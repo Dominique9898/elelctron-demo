@@ -52,7 +52,7 @@ import { init } from '@sentry/electron'
   如果出现TypeError: mod.require is not a function,
   加上 import * as Sentry from '@sentry/electron'
 */
-init({dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742'})
+init({dsn: 'https://xxx@o410650.ingest.sentry.io/xxx'})
 crashReporter.start({
   productName: 'yourProductName',
   companyName: 'yourCompanyName',
@@ -120,7 +120,7 @@ electron-vue项目下.如果没进行修改默认entry和output配置,一般url-
 import { init } from '@sentry/electron/dist/main'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && init({
-  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
   release: 'demo-1', //对于sentryWebpackPlugin必须
 })
 ```
@@ -129,7 +129,7 @@ process.env.NODE_ENV === 'production' && init({
 import { Vue as VueIntegration } from '@sentry/integrations'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && Sentry.init({
-  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
   release: 'demo-1', //对于sentryWebpackPlugin必须
   integrations: [
     new VueIntegration({
