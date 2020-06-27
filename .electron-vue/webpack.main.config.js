@@ -7,8 +7,10 @@ const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
 const MinifyPlugin = require("babel-minify-webpack-plugin")
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 let mainConfig = {
+  devtool: '#cheap-module-eval-source-map',
   entry: {
     main: path.join(__dirname, '../src/main/index.js')
   },
@@ -38,7 +40,14 @@ let mainConfig = {
     path: path.join(__dirname, '../dist/electron')
   },
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new SentryCliPlugin({
+      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
+      release:'electron-test-2', // 一致的版本号
+      configFile: ".sentryclirc", // 不用改
+      ignore: ['node_modules'],
+      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
+    }),
   ],
   resolve: {
     extensions: ['.js', '.json', '.node']
@@ -61,6 +70,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust mainConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
+  mainConfig.devtool = 'hidden-source-map'
   mainConfig.plugins.push(
     new MinifyPlugin(),
     new webpack.DefinePlugin({

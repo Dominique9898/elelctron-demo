@@ -4,7 +4,7 @@
     <main>
       <div class="left-side">
         <span class="title">
-          Welcome to your new project!
+          Welcome to your new project!res:{{this.res}}
         </span>
         <system-information></system-information>
       </div>
@@ -36,8 +36,21 @@
     name: 'landing-page',
     components: { SystemInformation },
     methods: {
+      //注入错误
+      myUndefinedFunction(err) {
+        this.res = err;
+      },
       open (link) {
         this.$electron.shell.openExternal(link)
+      }
+    },
+    created() {
+      this.myUndefinedFunction(err)
+      throw new errorLog('123213')
+    },
+    data() {
+      return {
+        res: ''
       }
     }
   }

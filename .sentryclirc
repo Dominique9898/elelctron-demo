@@ -1,0 +1,7 @@
+[auth]
+token=d05d9dfd9b38434ca53c8a47c13f3e75f357cd4916624acbbf512663e34c0513
+
+[defaults]
+url = https://sentry.io
+org = watanabesayuri
+project = electron-vur

@@ -11,6 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const SentryCliPlugin = require('@sentry/webpack-plugin')
 
 /**
  * List of node_modules to include in webpack bundle
@@ -102,6 +103,13 @@ let rendererConfig = {
   },
   plugins: [
     new VueLoaderPlugin(),
+    new SentryCliPlugin({
+      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
+      release:'electron-test-2', // 一致的版本号
+      configFile: ".sentryclirc", // 不用改
+      ignore: ['node_modules'],
+      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
+    }),
     new MiniCssExtractPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -160,8 +168,7 @@ if (process.env.NODE_ENV !== 'production') {
  * Adjust rendererConfig for production settings
  */
 if (process.env.NODE_ENV === 'production') {
-  rendererConfig.devtool = 'hidden-souce-map'  // sourcemap
-
+  rendererConfig.devtool = 'hidden-source-map'  // sourcemap
   rendererConfig.plugins.push(
     new MinifyPlugin(),
     new CopyWebpackPlugin([
