@@ -105,8 +105,8 @@ let rendererConfig = {
     new VueLoaderPlugin(),
     new SentryCliPlugin({
       include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
-      release:'electron-test-2', // 一致的版本号
       configFile: ".sentryclirc", // 不用改
+      release: 'demo-1', //对于sentryWebpackPlugin必须
       ignore: ['node_modules'],
       urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
     }),

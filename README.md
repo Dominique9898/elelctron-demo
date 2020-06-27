@@ -48,6 +48,10 @@ crashReporter.start({
 ```js
 //main/index.js
 import { init } from '@sentry/electron'
+/*
+  如果出现TypeError: mod.require is not a function,
+  加上 import * as Sentry from '@sentry/electron'
+*/
 init({dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742'})
 crashReporter.start({
   productName: 'yourProductName',
@@ -74,14 +78,7 @@ let mainConfig = {
   },
   //  ....
   plugins: [
-    new webpack.NoEmitOnErrorsPlugin(),
-    new SentryCliPlugin({
-      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
-      release:'electron-test-2', // 一致的版本号
-      configFile: ".sentryclirc", // 不用改
-      ignore: ['node_modules'],
-      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
-    }),
+    new webpack.NoEmitOnErrorsPlugin()
   ]
   //...
 }
@@ -116,6 +113,49 @@ electron-vue项目下.如果没进行修改默认entry和output配置,一般url-
 `sentry-cli releases files electron-vue0.0.1 upload-sourcemaps --url-prefix 'app:///dist/electron/' './dist/electron/'`
 **Hint:如果是vue-cli的web项目.url-prefix默认是'~/js',include地址是'./dist/js'**
 ![IMAGE](img/BBF5B285855153144EC5FA13279821FF.jpg)
+#### 6.2 @sentry/webpack-plugin打包自动上传
+需要在main/index.js,renderer/main.js,webpack.renderer.config.js,webpack.main.config.js中加入一致的release.
+```javascript
+//main/index.js
+import { init } from '@sentry/electron/dist/main'
+import * as Sentry from '@sentry/electron'
+init({
+  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  release: 'demo-1', //对于sentryWebpackPlugin必须
+})
+```
+```javascript
+//renderer/main.js
+import { Vue as VueIntegration } from '@sentry/integrations'
+import * as Sentry from '@sentry/electron'
+Sentry.init({
+  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  release: 'demo-1', //对于sentryWebpackPlugin必须
+  integrations: [
+    new VueIntegration({
+      Vue,
+      attachProps: true,
+      logErrors: true
+    })
+  ],
+})
+```
+```javascript
+//main和renderer的webpack
+const SentryCliPlugin = require('@sentry/webpack-plugin')
+module.exports = {
+  plugin:[
+    ...
+       new SentryCliPlugin({
+          include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
+          configFile: ".sentryclirc", // 不用改
+          release: 'demo-1', //对于sentryWebpackPlugin必须
+          ignore: ['node_modules'],
+          urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
+        })
+  ]
+}
+```
 #### 7. 打开打包后的文件运行
 运行后再现一下错误,sentry日志就会更新.然后就可以看到错误代码行啦
 ![IMAGE](img/0292DB1C6372D900BC30A22221EAACC2.jpg)

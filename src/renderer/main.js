@@ -9,6 +9,7 @@ import { Vue as VueIntegration } from '@sentry/integrations'
 import * as Sentry from '@sentry/electron'
 Sentry.init({
   dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  release: 'demo-1', //对于sentryWebpackPlugin必须
   integrations: [
     new VueIntegration({
       Vue,

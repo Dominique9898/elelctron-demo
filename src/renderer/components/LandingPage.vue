@@ -45,8 +45,7 @@
       }
     },
     created() {
-      this.myUndefinedFunction(err)
-      throw new errorLog('123213')
+      this.myUndefinedFunction(noRelease)
     },
     data() {
       return {

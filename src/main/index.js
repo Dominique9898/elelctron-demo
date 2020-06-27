@@ -1,6 +1,10 @@
 import { app, BrowserWindow } from 'electron'
-import { init } from '@sentry/electron'
-init({dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742'})
+import { init } from '@sentry/electron/dist/main'
+import * as Sentry from '@sentry/electron'
+init({
+  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  release: 'demo-1', //对于sentryWebpackPlugin必须
+})
 
 /**
  * Set `__static` path to static files in production
