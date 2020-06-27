@@ -23,7 +23,6 @@ const SentryCliPlugin = require('@sentry/webpack-plugin')
 let whiteListedModules = ['vue']
 
 let rendererConfig = {
-  devtool: '#cheap-module-eval-source-map',
   entry: {
     renderer: path.join(__dirname, '../src/renderer/main.js')
   },
@@ -103,13 +102,6 @@ let rendererConfig = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new SentryCliPlugin({
-      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
-      configFile: ".sentryclirc", // 不用改
-      release: 'demo-1', //对于sentryWebpackPlugin必须
-      ignore: ['node_modules'],
-      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
-    }),
     new MiniCssExtractPlugin({filename: 'styles.css'}),
     new HtmlWebpackPlugin({
       filename: 'index.html',
@@ -171,6 +163,13 @@ if (process.env.NODE_ENV === 'production') {
   rendererConfig.devtool = 'hidden-source-map'  // sourcemap
   rendererConfig.plugins.push(
     new MinifyPlugin(),
+    new SentryCliPlugin({
+      include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
+      configFile: ".sentryclirc", // 不用改
+      release: 'demo-1', //对于sentryWebpackPlugin必须
+      ignore: ['node_modules'],
+      urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
+    }),
     new CopyWebpackPlugin([
       {
         from: path.join(__dirname, '../static'),

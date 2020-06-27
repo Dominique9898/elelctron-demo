@@ -45,7 +45,7 @@
       }
     },
     created() {
-      this.myUndefinedFunction(noRelease)
+      this.myUndefinedFunction(noDevtool)
     },
     data() {
       return {
