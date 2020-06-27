@@ -106,9 +106,9 @@ project = electron-vur(你的项目名,必须填对)
 ![IMAGE](img/51CAE8361B7AF91A46E27AD6D7A19F41.jpg)
 ##### 6.1 手动上传
 版本号可以在错误日志里看,
-![IMAGE](img/853A0C63BF6B00005A464719C94E7FF2.jpg)
-`sentry-cli releases files <版本号> upload-sourcemaps --url-prefix <线上资源URI，这里要和你的url所在位置进行对应> <打包出来的js和map文件所在目录>`
-electron-vue项目下.如果没进行修改默认entry和output配置,一般url-prefix为'app:///dist/electron/'.上传成功后可以看到文件
+![IMAGE](img/853A0C63BF6B00005A464719C94E7FF2.jpg) <br>
+`sentry-cli releases files <版本号> upload-sourcemaps --url-prefix <线上资源URI，这里要和你的url所在位置进行对应> <打包出来的js和map文件所在目录>` <br>
+electron-vue项目下.如果没进行修改默认entry和output配置,一般url-prefix为'app:///dist/electron/'.上传成功后可以看到文件 <br>
 `sentry-cli releases files electron-vue0.0.1 upload-sourcemaps --url-prefix 'app:///dist/electron/' './dist/electron/'` <br>
 **Hint:如果是vue-cli的web项目.url-prefix默认是`'~/js'`,include地址是'`./dist/js'`**
 ![IMAGE](img/BBF5B285855153144EC5FA13279821FF.jpg)
