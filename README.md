@@ -88,7 +88,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 <hr>
-webpack.main.config.js 同理 略
+webpack.renderer.config.js 同理 略
 
 #### 4. npm run build 打包
 #### 5. 根目录创建.sentrycli
@@ -110,11 +110,11 @@ project = electron-vur(你的项目名,必须填对)
 ![IMAGE](img/853A0C63BF6B00005A464719C94E7FF2.jpg)
 `sentry-cli releases files <版本号> upload-sourcemaps --url-prefix <线上资源URI，这里要和你的url所在位置进行对应> <打包出来的js和map文件所在目录>`
 electron-vue项目下.如果没进行修改默认entry和output配置,一般url-prefix为'app:///dist/electron/'.上传成功后可以看到文件
-`sentry-cli releases files electron-vue0.0.1 upload-sourcemaps --url-prefix 'app:///dist/electron/' './dist/electron/'`
-**Hint:如果是vue-cli的web项目.url-prefix默认是'~/js',include地址是'./dist/js'**
+`sentry-cli releases files electron-vue0.0.1 upload-sourcemaps --url-prefix 'app:///dist/electron/' './dist/electron/'` <br>
+**Hint:如果是vue-cli的web项目.url-prefix默认是`'~/js'`,include地址是'`./dist/js'`**
 ![IMAGE](img/BBF5B285855153144EC5FA13279821FF.jpg)
 #### 6.2 @sentry/webpack-plugin打包自动上传
-需要在main/index.js,renderer/main.js,webpack.renderer.config.js,webpack.main.config.js中加入一致的release.
+需要在`main/index.js`,`renderer/main.js`,`webpack.renderer.config.js`,`webpack.main.config.j`s中加入一致的release.
 ```javascript
 //main/index.js
 import { init } from '@sentry/electron/dist/main'
