@@ -119,7 +119,7 @@ electron-vue项目下.如果没进行修改默认entry和output配置,一般url-
 ![IMAGE](img/BBF5B285855153144EC5FA13279821FF.jpg)
 #### 6.2 法二:@sentry/webpack-plugin打包自动上传
 需要在`main/index.js`,`renderer/main.js`,`webpack.renderer.config.js`,`webpack.main.config.js`中加入一致的release.且测试环境下不自动上传
-
+如果想在dev也显示错误可以不加process.env.NODE_ENV === 'production',结合SentryPlugin插件的environment插件使用可以别区别prod和dev之间的bug
 ```javascript
 //main/index.js
 import { init } from '@sentry/electron/dist/main'

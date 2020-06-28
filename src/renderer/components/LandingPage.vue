@@ -37,7 +37,10 @@
     components: { SystemInformation },
     methods: {
       //注入错误
-      myUndefinedFunction(err) {
+      myUndefinedFunction(deleteAfterCompileqqq
+
+
+      ) {
         this.res = err;
       },
       open (link) {
@@ -45,7 +48,7 @@
       }
     },
     created() {
-      this.myUndefinedFunction(deleteAfterCompile)
+      this.myUndefinedFunction(noRelease)
     },
     data() {
       return {
