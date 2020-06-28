@@ -10,6 +10,7 @@ import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && Sentry.init({
   dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
   release: 'demo-1', //对于sentryWebpackPlugin必须
+  // release: process.env.SOURCE_VERSION,
   integrations: [
     new VueIntegration({
       Vue,

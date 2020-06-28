@@ -152,6 +152,7 @@ if (process.env.NODE_ENV === 'production') {
       configFile: ".sentryclirc", // 文件名不要写错
       ignore: ['node_modules'],
       release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
+      deleteAfterCompile: true, //每次打包前都会先删除全部该release的所有工作,避免重复文件上传,冗余
       urlPrefix: "app:///dist/electron/",//这里指的是上线后的文件路径
     })
   )

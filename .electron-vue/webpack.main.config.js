@@ -8,7 +8,7 @@ const webpack = require('webpack')
 
 const MinifyPlugin = require("babel-minify-webpack-plugin")
 const SentryCliPlugin = require('@sentry/webpack-plugin')
-const ZipPlugin = require()
+const ZipPlugin = require('webpack-zip-plugin')
 let mainConfig = {
   entry: {
     main: path.join(__dirname, '../src/main/index.js')
@@ -73,8 +73,10 @@ if (process.env.NODE_ENV === 'production') {
       configFile: ".sentryclirc", // 不用改
       ignore: ['node_modules'],
       release: 'demo-1', //对于sentryWebpackPlugin必须
+      // release: process.env.SOURCE_VERSION,
+      deleteAfterCompile: true, //每次打包前都会先删除全部该release的所有工作,避免重复文件上传,冗余
       urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
-    })
+    }),
   )
 }
 

@@ -167,7 +167,9 @@ if (process.env.NODE_ENV === 'production') {
       include: "./dist/electron/", // 作用的文件夹，如果只想js报错就./dist/js
       configFile: ".sentryclirc", // 不用改
       release: 'demo-1', //对于sentryWebpackPlugin必须
+      // release: process.env.SOURCE_VERSION,
       ignore: ['node_modules'],
+      deleteAfterCompile: true, //每次打包前都会先删除全部该release的所有工作,避免重复文件上传,冗余
       urlPrefix: "app:///dist/electron/",//这里指的你项目需要观测的文件如果你的项目有publicPath这里加上就对了
     }),
     new CopyWebpackPlugin([
