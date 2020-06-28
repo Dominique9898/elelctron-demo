@@ -3,6 +3,7 @@ import { init } from '@sentry/electron/dist/main'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && init({
   dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
   release: 'demo-1', //对于sentryWebpackPlugin必须
   // release: process.env.SOURCE_VERSION,
 })

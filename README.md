@@ -13,6 +13,7 @@ import { Vue as VueIntegration } from '@sentry/integrations'
 import * as Sentry from '@sentry/electron'
 Sentry.init({
   dsn: 'https://XXX.ingest.sentry.io/XXX', //你的dsn
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
   integrations: [
     new VueIntegration({
       Vue,
@@ -33,6 +34,7 @@ const { init, getIntegrations } = require('@sentry/electron')
 const VueIntegration = getIntegrations().browser.Vue
 init({
   dsn: 'https://xxx@report.url.cn/sentry/xxx',
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
   debug: true,
   integrations: [new VueIntegration()]
 })
@@ -52,7 +54,10 @@ import { init } from '@sentry/electron'
   如果出现TypeError: mod.require is not a function,
   加上 import * as Sentry from '@sentry/electron'
 */
-init({dsn: 'https://xxx@o410650.ingest.sentry.io/xxx'})
+init({
+  dsn: 'https://966c9d6a96ab4c2d8d2367709fcf81da@o410650.ingest.sentry.io/5287742',
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
+})
 crashReporter.start({
   productName: 'yourProductName',
   companyName: 'yourCompanyName',
@@ -121,6 +126,7 @@ import { init } from '@sentry/electron/dist/main'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && init({
   dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
   release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
 })
 ```
@@ -130,6 +136,7 @@ import { Vue as VueIntegration } from '@sentry/integrations'
 import * as Sentry from '@sentry/electron'
 process.env.NODE_ENV === 'production' && Sentry.init({
   dsn: 'https://xxx@o410650.ingest.sentry.io/xxx',
+  environment: process.env.NODE_ENV,//区分不同系统之间的bug(dev,pro)
   release: 'demo-1', //对于sentryWebpackPlugin必须,根据需求改
   integrations: [
     new VueIntegration({
@@ -162,7 +169,8 @@ if (process.env.NODE_ENV === 'production') {
 运行后再现一下错误,sentry日志就会更新.然后就可以看到错误代码行啦
 ![IMAGE](img/0292DB1C6372D900BC30A22221EAACC2.jpg)
 
-#### 8. 删除对应版本的所有工作
+#### 8. Sentry其他指令 
+##### 8.1 手动删除对应版本的js文件 
 `sentry-cli releases files <版本号> delete --all`
 
 #### Build Setup 
